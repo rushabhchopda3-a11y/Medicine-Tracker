@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="page-title">📊 Dashboard</h1>
+<p class="subtitle">Quick overview of your medicine cabinet and alerts.</p>
+
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #fafafa;
+  }
+
+  .page-title {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 0.25rem;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .stat-card {
+    flex: 1 1 250px;
+    max-width: 320px;
+    padding: 1.8rem 1.2rem;
+    border-radius: 16px;
+    text-align: center;
+    color: #333;
+    background: white;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .stat-card::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 5px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* Card colors */
+  .info::after { background: linear-gradient(90deg, #2196f3, #64b5f6); }
+  .warning::after { background: linear-gradient(90deg, #f57c00, #ffb74d); }
+  .danger::after { background: linear-gradient(90deg, #d93025, #ef5350); }
+
+  .stat-card h2 {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 700;
+    color: #202124;
+  }
+
+  .stat-card p {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    color: #555;
+  }
+
+  /* Specific color tones inside cards */
+  .info h2 { color: #1a73e8; }
+  .warning h2 { color: #f57c00; }
+  .danger h2 { color: #d93025; }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .stat-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .stat-card {
+      width: 90%;
+    }
+  }
+</style>
+
+<div class="stat-container">
+
+  <div class="stat-card info">
+    <h2>{{ stats.total }}</h2>
+    <p>Total Medicines Tracked</p>
+  </div>
+
+  <div class="stat-card warning">
+    <h2>{{ stats.expiring_month }}</h2>
+    <p>Expiring This Month</p>
+  </div>
+
+  <div class="stat-card danger">
+    <h2>{{ stats.low_stock }}</h2>
+    <p>Low Stock (&lt; 10 Units)</p>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Alerts & Reminders{% endblock %}
+
+{% block content %}
+<h1 class="page-title">💊 Alerts & Reminders</h1>
+<p class="subtitle">Keep track of medicines nearing expiry or running low on stock.</p>
+
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #fafafa;
+  }
+
+  .page-title {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 0.25rem;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .alert-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+  }
+
+  .alert-section:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .alert-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .alert-section h2::before {
+    content: "⚠️";
+  }
+
+  .low-stock h2::before {
+    content: "📦";
+  }
+
+  .low-stock h2 {
+    color: #f57c00;
+  }
+
+  .alert-section.expiring h2 {
+    color: #d93025;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+  }
+
+  th, td {
+    border-bottom: 1px solid #eee;
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f1f5ff;
+    color: #333;
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) { background-color: #f9f9f9; }
+
+  td a {
+    text-decoration: none;
+    color: #1a73e8;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  td a:hover {
+    color: #0b57d0;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+    th {
+      display: none;
+    }
+    td {
+      padding: 0.75rem;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+    td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #333;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+  }
+</style>
+
+<!-- Expiring Medicines -->
+<div class="alert-section expiring">
+  <h2>Expiring Soon (Next 30 Days)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Medicine Name</th>
+        <th>Expires On</th>
+        <th>Days Left</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for med in alerts.expiring %}
+      <tr>
+        <td data-label="Medicine">{{ med[1] }}</td>
+        <td data-label="Expires On">{{ med[2] }}</td>
+        <td data-label="Days Left">{{ med[3] }} days</td>
+        <td data-label="Actions"><a href="/edit/{{ med[0] }}">View/Edit</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="empty-message">No medicines are expiring in the next 30 days.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Low Stock Medicines -->
+<div class="alert-section low-stock">
+  <h2>Low Stock (&lt; 10 Units)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Medicine Name</th>
+        <th>Quantity Remaining</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for med in alerts.low_stock %}
+      <tr>
+        <td data-label="Medicine">{{ med[1] }}</td>
+        <td data-label="Quantity">{{ med[2] }}</td>
+        <td data-label="Actions"><a href="/edit/{{ med[0] }}">View/Edit</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" class="empty-message">No medicines are low on stock.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

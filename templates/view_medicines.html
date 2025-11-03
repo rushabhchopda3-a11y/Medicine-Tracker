@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}View All Medicines{% endblock %}
+
+{% block content %}
+<h1 class="page-title">💊 Your Medicine Cabinet</h1>
+<p class="page-subtitle">All tracked medicines — stay organized and on top of expiries.</p>
+
+<style>
+  .page-title {
+    font-size: 2rem;
+    color: #0056b3;
+    margin-bottom: 0.25rem;
+  }
+  .page-subtitle {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+  th {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.9rem;
+    font-weight: 600;
+    border: none;
+    text-align: left;
+  }
+  td {
+    background-color: #fff;
+    padding: 0.9rem;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  tr:hover td {
+    background-color: #f0f8ff;
+    transition: 0.2s;
+  }
+
+  /* Expiry & Stock Highlighting */
+  .expired {
+    background-color: #ffe6e6 !important;
+  }
+  .low-stock {
+    background-color: #fff8e1 !important;
+  }
+
+  /* Action Buttons */
+  .action-btn {
+    text-decoration: none;
+    color: white;
+    padding: 0.4rem 0.9rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: 0.2s;
+  }
+  .edit-btn {
+    background-color: #28a745;
+  }
+  .edit-btn:hover {
+    background-color: #218838;
+  }
+  .delete-btn {
+    background-color: #dc3545;
+  }
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+
+  /* Add New Medicine Button */
+  .add-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+  .add-btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Empty message */
+  .empty-msg {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Medicine Name</th>
+      <th>Type</th>
+      <th>Strength</th>
+      <th>Expiry Date</th>
+      <th>Quantity</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for med in meds %}
+    {% set expiry_date = med[6] %}
+    {% set quantity = med[8] %}
+    {% set is_expired = expiry_date < now().date() %}
+    <tr class="{% if is_expired %}expired{% elif quantity < 10 %}low-stock{% endif %}">
+      <td>{{ med[1] }}</td>
+      <td>{{ med[3] }}</td>
+      <td>{{ med[5] }}</td>
+      <td>{{ med[6] }}</td>
+      <td>{{ med[8] }}</td>
+      <td>
+        <a href="/edit/{{ med[0] }}" class="action-btn edit-btn">Edit</a>
+        <a href="/delete/{{ med[0] }}" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this medicine?');">Delete</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="6" class="empty-msg">You haven't added any medicines yet.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

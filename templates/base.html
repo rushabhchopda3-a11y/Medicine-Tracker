@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}MedCare Tracker{% endblock %}</title>
+
+    <style>
+      /* ---------- Base ---------- */
+      :root {
+        --primary: #007bff;
+        --primary-dark: #0056b3;
+        --bg-light: #f4f6fa;
+        --text-dark: #333;
+        --white: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ---------- Navbar ---------- */
+      nav {
+        background: var(--primary);
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav a {
+        color: var(--white);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      nav a:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+      }
+
+      /* ---------- Container ---------- */
+      .container {
+        flex: 1;
+        max-width: 900px;
+        width: 90%;
+        margin: 2rem auto;
+        background: var(--white);
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        padding: 2rem;
+        animation: fadeIn 0.4s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ---------- Headings ---------- */
+      h1, h2, h3 {
+        color: var(--primary-dark);
+        margin-bottom: 1rem;
+      }
+
+      /* ---------- Footer ---------- */
+      footer {
+        background: var(--primary-dark);
+        color: #dce7f5;
+        text-align: center;
+        padding: 1rem 0;
+        font-size: 0.9rem;
+      }
+
+      /* ---------- Responsive ---------- */
+      @media (max-width: 600px) {
+        nav {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .container {
+          width: 95%;
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <a href="/">🏠 Dashboard</a>
+      <a href="/add">➕ Add Medicine</a>
+      <a href="/view">📋 View All</a>
+      <a href="/alerts">⚠️ Alerts</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      © {{ current_year or "2025" }} MedCare Tracker · Stay Healthy, Stay Organized 💙
+    </footer>
+  </body>
+</html>

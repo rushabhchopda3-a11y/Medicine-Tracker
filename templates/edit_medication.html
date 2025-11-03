@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Medicine{% endblock %}
+
+{% block content %}
+<h1 class="page-title">💊 Edit Medicine: {{ med[1] }}</h1>
+<p class="subtitle">Update the details for this medication and click <strong>"Save Changes"</strong>.</p>
+
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f8fafc;
+  }
+
+  .page-title {
+    text-align: center;
+    color: #1976d2;
+    margin-bottom: 0.3rem;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  form {
+    background-color: white;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+
+  form:hover {
+    box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+  }
+
+  form div {
+    margin-bottom: 1.25rem;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #333;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+    outline: none;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    background: linear-gradient(90deg, #1976d2, #42a5f5);
+    color: white;
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: transform 0.2s ease, background 0.3s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(90deg, #1565c0, #1e88e5);
+  }
+
+  /* Group sections visually */
+  .form-section {
+    background: #f9fbfd;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    border-left: 4px solid #1976d2;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-section h3 {
+    margin-top: 0;
+    color: #1976d2;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    form {
+      padding: 1.5rem;
+    }
+    .page-title {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+
+<form action="/edit/{{ med[0] }}" method="POST">
+
+  <div class="form-section">
+    <h3>Basic Information</h3>
+    <div>
+      <label for="med_name">Medicine Name <span style="color:red;">*</span></label>
+      <input type="text" id="med_name" name="med_name" value="{{ med[1] }}" required>
+    </div>
+    
+    <div>
+      <label for="gen_name">Generic Name</label>
+      <input type="text" id="gen_name" name="gen_name" value="{{ med[2] or '' }}">
+    </div>
+
+    <div>
+      <label for="med_type">Type <span style="color:red;">*</span></label>
+      <select id="med_type" name="med_type" required>
+        {% for type in ['Tablet','Capsule','Syrup','Injection','Drops','Cream','Inhaler','Other'] %}
+        <option value="{{ type }}" {% if med[3] == type %}selected{% endif %}>{{ type }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label for="manufacturer">Manufacturer</label>
+      <input type="text" id="manufacturer" name="manufacturer" value="{{ med[4] or '' }}">
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Medicine Details</h3>
+    <div>
+      <label for="strength">Strength</label>
+      <input type="text" id="strength" name="strength" value="{{ med[5] or '' }}">
+    </div>
+
+    <div>
+      <label for="expiry_date">Expiry Date <span style="color:red;">*</span></label>
+      <input type="date" id="expiry_date" name="expiry_date" value="{{ med[6] }}" required>
+    </div>
+
+    <div>
+      <label for="purchase_date">Purchase Date</label>
+      <input type="date" id="purchase_date" name="purchase_date" value="{{ med[7] or '' }}">
+    </div>
+
+    <div>
+      <label for="quantity">Quantity <span style="color:red;">*</span></label>
+      <input type="number" id="quantity" name="quantity" min="0" value="{{ med[8] }}" required>
+    </div>
+
+    <div>
+      <label for="price">Price (₹)</label>
+      <input type="number" id="price" name="price" step="0.01" min="0" value="{{ med[9] or '' }}">
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Prescription & Notes</h3>
+    <div>
+      <label for="presc_req">Prescription Required?</label>
+      <select id="presc_req" name="presc_req">
+        <option value="0" {% if med[10] == 0 %}selected{% endif %}>No</option>
+        <option value="1" {% if med[10] == 1 %}selected{% endif %}>Yes</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="storage">Storage Instructions</label>
+      <textarea id="storage" name="storage" rows="3">{{ med[11] or '' }}</textarea>
+    </div>
+
+    <div>
+      <label for="side_effects">Side Effects</label>
+      <textarea id="side_effects" name="side_effects" rows="3">{{ med[12] or '' }}</textarea>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit">💾 Save Changes</button>
+  </div>
+
+</form>
+{% endblock %}
