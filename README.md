@@ -1,47 +1,50 @@
-# 💊 Medicine Tracker
+💊 Medicine Tracker
 
-A Flask-based web app to track and manage medicines and alerts.
+A simple and elegant Flask-based web app to track your medicines, manage reminders, and view your daily schedule — all in one place.
 
-## 🚀 How to Run
+🚀 Features
+✅ Add, edit, and delete medicines
+✅ View all medicines in a clean dashboard
+✅ Set alerts and reminders
+✅ Uses SQLite for lightweight data storage
+✅ Built with Flask, HTML, CSS, and Bootstrap/Tailwind
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/<your-username>/Medicine-Tracker.git
+🧠 Tech Stack
+
+Category	     Technology
+Backend	         Flask (Python)
+Frontend	     HTML, CSS, Bootstrap
+Database	     SQLite
+Version Control	 Git + GitHub
+Environment	     Virtualenv
+
+🛠️ Installation & Setup
+
+1. Clone the Repository
+   git clone https://github.com/rushabhchopda3-a11y/Medicine-Tracker.git
    cd Medicine-Tracker
 
-2. python -m venv venv
-   venv\Scripts\activate   # Windows
-   # or
-   source venv/bin/activate   # Mac/Linux
+2. Create a Virtual Environment
+   python -m venv venv
+   venv\Scripts\activate
 
-3. pip install -r requirements.txt
+3. Install Dependencies
+   pip install -r requirements.txt
 
-4. python app.py
+4. Run the App
+   python app.py
 
-5. http://127.0.0.1:5000
+5. Open in Browser
+   http://127.0.0.1:5000
 
-6. Deactivate
- 
-7. project structure 
-Medicine_Tracker/
-├── app.py
-├── database.py
-├── templates/
-│   ├── add_medication.html
-│   ├── edit_medication.html
-│   ├── dashboard.html
-│   ├── view_medicines.html
-│   └── base.html
-├── static/                 # (optional, can be empty)
-├── requirements.txt
-└── README.md
+👨‍💻 Author
+Rushabh Chopda
+📧 rushabhchopda3@gmail.com
+🌐 GitHub Profile
 
-Tech Stack
-Python (Flask) – Backend web framework
-HTML5, CSS3 – Frontend templates
-SQLite / MySQL – Database
+⭐ Contribute
+Pull requests are welcome!
+If you’d like to improve the project (UI, database, or functionality), feel free to fork and submit your ideas.
 
-License
-This project is open-source and free to use for learning and development purposes.
-
-✨ Developed by Rushabh Chopda
+🧡 Support
+If you like this project, please give it a ⭐ on GitHub — it helps others discover it!
