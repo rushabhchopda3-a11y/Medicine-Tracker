@@ -37,10 +37,22 @@ Environment	     Virtualenv
 5. Open in Browser
    http://127.0.0.1:5000
 
+🏠 Dashboard
+![Dashboard Screenshot](image/dashboard.png.jpg)
+
+➕ Add Medicine Page
+![Add Medicine Screenshot](image/addmedicine.png.jpg)
+
+⏰ Reminder View
+![Reminder Page](image/alert.png.jpg)
+
+View page
+![View Page](image/view.png.jpg)
+
 👨‍💻 Author
 Rushabh Chopda
 📧 rushabhchopda3@gmail.com
-🌐 GitHub Profile
+
 
 ⭐ Contribute
 Pull requests are welcome!
